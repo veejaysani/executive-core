@@ -104,7 +104,7 @@ add_custom_command(
             -s ${TI_SIMPLELINK_SDK_DIR}/.metadata/product.json
             -o ${CMAKE_CURRENT_BINARY_DIR}/syscfg
             --compiler gcc
-            --board /ti/boards/${TI_SIMPLELINK_BOARD}
+	    --device CC2674R10RGZ
             --rtos ${TI_SIMPLELINK_KERNEL}
             ${CMAKE_CURRENT_SOURCE_DIR}/openthread.syscfg
     DEPENDS
