@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "CC2674P10RGZ" --package "RGZ" --part "Default" --rtos "freertos" --product "simplelink_cc13xx_cc26xx_sdk@7.10.01.24"
+ * @cliArgs --device "CC2674R10RGZ" --package "RGZ" --part "Default" --rtos "freertos" --product "simplelink_cc13xx_cc26xx_sdk@7.10.01.24"
  * @versions {"tool":"1.16.2+3028"}
  */
 
@@ -57,8 +57,8 @@ custom.radioConfigieee154.codeExportConfig.$name             = "ti_devices_radio
 custom.radioConfigieee154.codeExportConfig.useConst          = true;
 custom.radioConfigieee154.codeExportConfig.useMulti          = true;
 custom.radioConfigieee154.codeExportConfig.symGenMethod      = "Custom";
-custom.radioConfigieee154.codeExportConfig.cmdRadioSetupPa   = "RF_cmdIeeeRadioSetup";
-custom.radioConfigieee154.codeExportConfig.cmdList_ieee_15_4 = ["cmdIeeeCsma","cmdIeeeEdScan","cmdIeeeRx","cmdIeeeRxAck","cmdIeeeTx","cmdRadioSetupPa","cmdTxTest"];
+custom.radioConfigieee154.codeExportConfig.cmdList_ieee_15_4 = ["cmdFs","cmdIeeeCsma","cmdIeeeEdScan","cmdIeeeRx","cmdIeeeRxAck","cmdIeeeTx","cmdRadioSetup","cmdTxTest"];
+custom.radioConfigieee154.codeExportConfig.cmdRadioSetup     = "RF_cmdIeeeRadioSetup";
 
 AESECB1.$name = "CONFIG_AESECB_MBEDTLS";
 
@@ -102,8 +102,8 @@ TRNG1.$name = "CONFIG_TRNG_THREAD";
 
 UART21.$name              = "CONFIG_UART2_0";
 UART21.uart.$assign       = "UART0";
-UART21.uart.txPin.$assign = "DIO_13";
-UART21.uart.rxPin.$assign = "DIO_12";
+UART21.uart.txPin.$assign = "DIO_3";
+UART21.uart.rxPin.$assign = "DIO_2";
 
 Watchdog1.$name            = "CONFIG_WATCHDOG0";
 Watchdog1.watchdog.$assign = "WDT0";
@@ -113,10 +113,10 @@ Watchdog1.watchdog.$assign = "WDT0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO1.gpioPin.$suggestSolution         = "DIO_5";
-GPIO2.gpioPin.$suggestSolution         = "DIO_6";
-GPIO3.gpioPin.$suggestSolution         = "DIO_7";
-GPIO4.gpioPin.$suggestSolution         = "DIO_8";
+GPIO1.gpioPin.$suggestSolution         = "DIO_0";
+GPIO2.gpioPin.$suggestSolution         = "DIO_1";
+GPIO3.gpioPin.$suggestSolution         = "DIO_4";
+GPIO4.gpioPin.$suggestSolution         = "DIO_5";
 SPI1.spi.$suggestSolution              = "SPI0";
 SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH3";
 SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH4";
