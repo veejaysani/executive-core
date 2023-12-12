@@ -32,6 +32,8 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include <ti_drivers_config.h>
+
 /* Driver Header files */
 #include <ti/drivers/Board.h>
 #include <ti/drivers/GPIO.h>
@@ -64,6 +66,9 @@ void vTaskCode(void *pvParameters)
     app_main(0, NULL);
 }
 
+TaskHandle_t blinkerHandle; 
+void blinker(void *args);
+
 int main(void)
 {
     Board_init();
@@ -87,9 +92,24 @@ int main(void)
             ;
     }
 
+    xTaskCreate(blinker, "BLINK", APP_STACK_SIZE, NULL, tskIDLE_PRIORITY, &blinkerHandle);
+
     vTaskStartScheduler();
 
     // Should never get here.
     while (1)
         ;
+}
+
+
+void blinker(void *args)
+{
+    (void) args;
+    int on = 1; 
+
+    while ( true ) 
+    {
+        GPIO_write(CONFIG_GPIO_GLED, on = (on ? 0 : 1));
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
 }

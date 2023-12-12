@@ -23,9 +23,6 @@ const ECJPAKE1  = ECJPAKE.addInstance();
 const GPIO      = scripting.addModule("/ti/drivers/GPIO");
 const GPIO1     = GPIO.addInstance();
 const GPIO2     = GPIO.addInstance();
-const GPIO3     = GPIO.addInstance();
-const GPIO4     = GPIO.addInstance();
-const GPIO5     = GPIO.addInstance();
 const NVS       = scripting.addModule("/ti/drivers/NVS");
 const NVS1      = NVS.addInstance();
 const Power     = scripting.addModule("/ti/drivers/Power");
@@ -68,22 +65,15 @@ ECDSA1.$name = "CONFIG_ECDSA_0";
 
 ECJPAKE1.$name = "CONFIG_ECJPAKE_0";
 
-GPIO1.$name = "CONFIG_GPIO_BTN1";
+GPIO1.mode            = "Output";
+GPIO1.$name           = "CONFIG_GPIO_GLED";
+GPIO1.gpioPin.$assign = "DIO_16";
 
-GPIO2.$name = "CONFIG_GPIO_BTN2";
-
-GPIO3.mode            = "Output";
-GPIO3.$name           = "CONFIG_GPIO_GLED";
-GPIO3.gpioPin.$assign = "DIO_16";
-
-GPIO4.mode  = "Output";
-GPIO4.$name = "CONFIG_GPIO_RLED";
-
-GPIO5.$name              = "CONFIG_SPINEL_INT";
-GPIO5.mode               = "Output";
-GPIO5.outputStrength     = "High";
-GPIO5.initialOutputState = "High";
-GPIO5.gpioPin.$assign    = "DIO_15";
+GPIO2.$name              = "CONFIG_SPINEL_INT";
+GPIO2.mode               = "Output";
+GPIO2.outputStrength     = "High";
+GPIO2.initialOutputState = "High";
+GPIO2.gpioPin.$assign    = "DIO_15";
 
 NVS1.$name                    = "CONFIG_NVSINTERNAL";
 NVS1.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX0";
@@ -114,9 +104,6 @@ Watchdog1.watchdog.$assign = "WDT0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO1.gpioPin.$suggestSolution         = "DIO_0";
-GPIO2.gpioPin.$suggestSolution         = "DIO_1";
-GPIO4.gpioPin.$suggestSolution         = "DIO_4";
 SPI1.spi.$suggestSolution              = "SPI0";
 SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH3";
 SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH4";
