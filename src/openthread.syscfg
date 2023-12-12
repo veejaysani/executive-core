@@ -31,10 +31,12 @@ const SHA2      = scripting.addModule("/ti/drivers/SHA2");
 const SHA21     = SHA2.addInstance();
 const SPI       = scripting.addModule("/ti/drivers/SPI");
 const SPI1      = SPI.addInstance();
+const SPI2      = SPI.addInstance();
 const TRNG      = scripting.addModule("/ti/drivers/TRNG");
 const TRNG1     = TRNG.addInstance();
 const UART2     = scripting.addModule("/ti/drivers/UART2");
 const UART21    = UART2.addInstance();
+const UART22    = UART2.addInstance();
 const Watchdog  = scripting.addModule("/ti/drivers/Watchdog");
 const Watchdog1 = Watchdog.addInstance();
 
@@ -84,17 +86,28 @@ SHA21.$name = "CONFIG_SHA2_0";
 
 SPI1.$name               = "CONFIG_SPI_1";
 SPI1.mode                = "Four Pin CS Active Low";
-SPI1.spi.sclkPin.$assign = "DIO_26";
-SPI1.spi.pociPin.$assign = "DIO_24";
-SPI1.spi.picoPin.$assign = "DIO_25";
-SPI1.spi.csnPin.$assign  = "DIO_27";
+SPI1.spi.sclkPin.$assign = "DIO_20";
+SPI1.spi.pociPin.$assign = "DIO_21";
+SPI1.spi.picoPin.$assign = "DIO_22";
+SPI1.spi.csnPin.$assign  = "DIO_9";
+
+SPI2.$name               = "CONFIG_SPI_EXT_FLASH";
+SPI2.mode                = "Four Pin CS Active Low";
+SPI2.spi.sclkPin.$assign = "DIO_28";
+SPI2.spi.pociPin.$assign = "DIO_30";
+SPI2.spi.picoPin.$assign = "DIO_29";
+SPI2.spi.csnPin.$assign  = "DIO_27";
 
 TRNG1.$name = "CONFIG_TRNG_THREAD";
 
-UART21.$name              = "CONFIG_UART2_0";
+UART21.$name              = "CONFIG_UART2_DEBUG_UART";
 UART21.uart.$assign       = "UART0";
 UART21.uart.txPin.$assign = "DIO_3";
 UART21.uart.rxPin.$assign = "DIO_2";
+
+UART22.$name              = "CONFIG_UART2_SENSOR_CORE";
+UART22.uart.txPin.$assign = "DIO_26";
+UART22.uart.rxPin.$assign = "DIO_25";
 
 Watchdog1.$name            = "CONFIG_WATCHDOG0";
 Watchdog1.watchdog.$assign = "WDT0";
@@ -104,6 +117,10 @@ Watchdog1.watchdog.$assign = "WDT0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-SPI1.spi.$suggestSolution              = "SPI0";
-SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH3";
-SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH4";
+SPI1.spi.$suggestSolution              = "SPI2";
+SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH19";
+SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH20";
+SPI2.spi.$suggestSolution              = "SPI1";
+SPI2.spi.dmaRxChannel.$suggestSolution = "DMA_CH16";
+SPI2.spi.dmaTxChannel.$suggestSolution = "DMA_CH17";
+UART22.uart.$suggestSolution           = "UART1";
