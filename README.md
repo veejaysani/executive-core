@@ -28,7 +28,7 @@ reference development kit available on ti.com.
 
 ```bash
 $ cd <path-to-ot-ti>
-$ ./script/build LP_CC2652R7
+$ ./script/build LP_EM_CC1354P10_1
 ```
 
 ## Flash Binaries

@@ -52,6 +52,9 @@ extern int app_main(int argc, char *argv[]);
 StackType_t  appStack[APP_STACK_SIZE];
 StaticTask_t appTaskBuffer;
 
+TaskHandle_t blinkerHandle; 
+void blinker(void *args);
+
 void vApplicationStackOverflowHook(void)
 {
     while (1)
@@ -65,9 +68,6 @@ void vTaskCode(void *pvParameters)
     (void)pvParameters;
     app_main(0, NULL);
 }
-
-TaskHandle_t blinkerHandle; 
-void blinker(void *args);
 
 int main(void)
 {
