@@ -23,6 +23,12 @@ const ECJPAKE1  = ECJPAKE.addInstance();
 const GPIO      = scripting.addModule("/ti/drivers/GPIO");
 const GPIO1     = GPIO.addInstance();
 const GPIO2     = GPIO.addInstance();
+const GPIO15    = GPIO.addInstance();
+const GPIO16    = GPIO.addInstance();
+const GPIO17    = GPIO.addInstance();
+const GPIO18    = GPIO.addInstance();
+const GPIO19    = GPIO.addInstance();
+const GPIO20    = GPIO.addInstance();
 const NVS       = scripting.addModule("/ti/drivers/NVS");
 const NVS1      = NVS.addInstance();
 const Power     = scripting.addModule("/ti/drivers/Power");
@@ -37,6 +43,7 @@ const TRNG1     = TRNG.addInstance();
 const UART2     = scripting.addModule("/ti/drivers/UART2");
 const UART21    = UART2.addInstance();
 const UART22    = UART2.addInstance();
+const UART23    = UART2.addInstance();
 const Watchdog  = scripting.addModule("/ti/drivers/Watchdog");
 const Watchdog1 = Watchdog.addInstance();
 
@@ -68,7 +75,7 @@ ECDSA1.$name = "CONFIG_ECDSA_0";
 ECJPAKE1.$name = "CONFIG_ECJPAKE_0";
 
 GPIO1.mode            = "Output";
-GPIO1.$name           = "CONFIG_GPIO_GLED";
+GPIO1.$name           = "CONFIG_GPIO_GREEN_LED";
 GPIO1.gpioPin.$assign = "DIO_16";
 
 GPIO2.$name              = "CONFIG_SPINEL_INT";
@@ -77,6 +84,23 @@ GPIO2.outputStrength     = "High";
 GPIO2.initialOutputState = "High";
 GPIO2.gpioPin.$assign    = "DIO_15";
 
+GPIO15.$name           = "CONFIG_GPIO_SENSOR_CORE_RF_WAKE";
+GPIO15.gpioPin.$assign = "DIO_24";
+
+GPIO16.$name           = "CONFIG_GPIO_SENSOR_CORE_RF_WAKE_NIRQ";
+GPIO16.gpioPin.$assign = "DIO_23";
+
+GPIO17.$name           = "CONFIG_GPIO_COEX_RQST";
+GPIO17.gpioPin.$assign = "DIO_17";
+
+GPIO18.$name           = "CONFIG_GPIO_COEX_PRIO";
+GPIO18.gpioPin.$assign = "DIO_18";
+
+GPIO19.$name = "CONFIG_GPIO_0";
+
+GPIO20.$name           = "CONFIG_GPIO_COEX_GNT";
+GPIO20.gpioPin.$assign = "DIO_19";
+
 NVS1.$name                    = "CONFIG_NVSINTERNAL";
 NVS1.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX0";
 NVS1.internalFlash.regionBase = 0x52000;
@@ -84,12 +108,16 @@ NVS1.internalFlash.regionSize = 0x4000;
 
 SHA21.$name = "CONFIG_SHA2_0";
 
-SPI1.$name               = "CONFIG_SPI_1";
-SPI1.mode                = "Four Pin CS Active Low";
-SPI1.spi.sclkPin.$assign = "DIO_20";
-SPI1.spi.pociPin.$assign = "DIO_21";
-SPI1.spi.picoPin.$assign = "DIO_22";
-SPI1.spi.csnPin.$assign  = "DIO_9";
+SPI1.$name                 = "CONFIG_SPI_1";
+SPI1.mode                  = "Four Pin CS Active Low";
+SPI1.spi.sclkPin.$assign   = "DIO_20";
+SPI1.spi.pociPin.$assign   = "DIO_21";
+SPI1.spi.picoPin.$assign   = "DIO_22";
+SPI1.spi.csnPin.$assign    = "DIO_9";
+SPI1.sclkPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_SCLK";
+SPI1.pociPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_POCI";
+SPI1.picoPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_PICO";
+SPI1.csnPinInstance.$name  = "CONFIG_GPIO_SPI1_VOICE_CSN";
 
 SPI2.$name               = "CONFIG_SPI_EXT_FLASH";
 SPI2.mode                = "Four Pin CS Active Low";
@@ -109,6 +137,10 @@ UART22.$name              = "CONFIG_UART2_SENSOR_CORE";
 UART22.uart.txPin.$assign = "DIO_26";
 UART22.uart.rxPin.$assign = "DIO_25";
 
+UART23.$name              = "CONFIG_UART2_E2C_CORE";
+UART23.uart.txPin.$assign = "DIO_14";
+UART23.uart.rxPin.$assign = "DIO_13";
+
 Watchdog1.$name            = "CONFIG_WATCHDOG0";
 Watchdog1.watchdog.$assign = "WDT0";
 
@@ -117,10 +149,12 @@ Watchdog1.watchdog.$assign = "WDT0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+GPIO19.gpioPin.$suggestSolution        = "DIO_0";
 SPI1.spi.$suggestSolution              = "SPI2";
 SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH19";
 SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH20";
 SPI2.spi.$suggestSolution              = "SPI1";
 SPI2.spi.dmaRxChannel.$suggestSolution = "DMA_CH16";
 SPI2.spi.dmaTxChannel.$suggestSolution = "DMA_CH17";
-UART22.uart.$suggestSolution           = "UART1";
+UART22.uart.$suggestSolution           = "UART2";
+UART23.uart.$suggestSolution           = "UART1";

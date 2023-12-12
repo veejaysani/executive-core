@@ -109,7 +109,7 @@ void blinker(void *args)
 
     while ( true ) 
     {
-        GPIO_write(CONFIG_GPIO_GLED, on = (on ? 0 : 1));
+        GPIO_write(CONFIG_GPIO_GREEN_LED, on = (on ? 0 : 1));
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

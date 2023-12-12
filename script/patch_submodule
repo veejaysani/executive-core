@@ -1,0 +1,19 @@
+#!/bin/sh
+# Patch a single submodule when we're already in the top-level submodule repo
+
+THIS_REPO=$(pwd)
+if [ -d ../patches ]
+then
+  echo "Update and patch ${THIS_REPO}"
+  git submodule update --init
+  git checkout -- .
+  for p in ../patches/*.patch
+  do
+    echo "Patch: ${p}"
+    patch -p1 < ${p}
+  done
+else
+  echo "Update only for ${THIS_REPO} (no patches found)"
+  git submodule update --init
+fi
+

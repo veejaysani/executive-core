@@ -1,0 +1,13 @@
+#!/bin/sh
+# Use git submodule foreach to patch all submodules via patch_submodule
+
+SCRIPT_VER=1.00
+REALPATH_CHK="$(which realpath)"
+[ "${REALPATH_CHK}" ] || { echo "realpath not found"; exit 1; }
+
+MY_DIR=$(realpath $(dirname $0))
+
+git submodule foreach ${MY_DIR}/patch_submodule
+
+echo "Completed update and patch of submodules"
+
