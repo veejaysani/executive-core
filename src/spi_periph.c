@@ -214,7 +214,7 @@ otError otPlatSpiSlaveEnable(otPlatSpiSlaveTransactionCompleteCallback aComplete
     spiParams.bitRate             = PLATFORM_SPI_FREQ;
     spiParams.frameFormat         = PLATFORM_SPI_FRAME_FORMAT;
 
-    sSpiHandle = SPI_open(CONFIG_SPI_1, &spiParams);
+    sSpiHandle = SPI_open(CONFIG_SPI_VOICE_IC, &spiParams);
 
     otEXPECT_ACTION(sSpiHandle != NULL, retval = OT_ERROR_FAILED);
 

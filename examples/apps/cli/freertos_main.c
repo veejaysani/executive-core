@@ -85,6 +85,13 @@ int main(void)
 
     SHA2_init();
 
+    {
+        GPIO_setMux(CONFIG_GPIO_FEM_CRX, IOC_PORT_RFC_GPO0);
+        GPIO_setMux(CONFIG_GPIO_FEM_CTX, IOC_PORT_RFC_GPO1);
+        GPIO_setMux(CONFIG_GPIO_FEM_CHL, IOC_PORT_RFC_GPO1);
+    }
+
+
     if (NULL ==
         xTaskCreateStatic(vTaskCode, "APP", APP_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, appStack, &appTaskBuffer))
     {

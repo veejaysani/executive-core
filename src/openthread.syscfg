@@ -29,6 +29,12 @@ const GPIO17    = GPIO.addInstance();
 const GPIO18    = GPIO.addInstance();
 const GPIO19    = GPIO.addInstance();
 const GPIO20    = GPIO.addInstance();
+const GPIO23    = GPIO.addInstance();
+const GPIO24    = GPIO.addInstance();
+const GPIO25    = GPIO.addInstance();
+const GPIO26    = GPIO.addInstance();
+const GPIO27    = GPIO.addInstance();
+const GPIO28    = GPIO.addInstance();
 const NVS       = scripting.addModule("/ti/drivers/NVS");
 const NVS1      = NVS.addInstance();
 const Power     = scripting.addModule("/ti/drivers/Power");
@@ -91,15 +97,41 @@ GPIO16.$name           = "CONFIG_GPIO_SENSOR_CORE_RF_WAKE_NIRQ";
 GPIO16.gpioPin.$assign = "DIO_23";
 
 GPIO17.$name           = "CONFIG_GPIO_COEX_RQST";
+GPIO17.mode            = "Output";
 GPIO17.gpioPin.$assign = "DIO_17";
 
 GPIO18.$name           = "CONFIG_GPIO_COEX_PRIO";
+GPIO18.mode            = "Output";
 GPIO18.gpioPin.$assign = "DIO_18";
 
 GPIO19.$name = "CONFIG_GPIO_0";
 
 GPIO20.$name           = "CONFIG_GPIO_COEX_GNT";
 GPIO20.gpioPin.$assign = "DIO_19";
+
+GPIO23.$name           = "CONFIG_GPIO_FEM_CHL";
+GPIO23.mode            = "Output";
+GPIO23.gpioPin.$assign = "DIO_4";
+
+GPIO24.$name           = "CONFIG_GPIO_FEM_CTX";
+GPIO24.mode            = "Output";
+GPIO24.gpioPin.$assign = "DIO_7";
+
+GPIO25.$name           = "CONFIG_GPIO_FEM_CPS";
+GPIO25.mode            = "Output";
+GPIO25.gpioPin.$assign = "DIO_8";
+
+GPIO26.$name           = "CONFIG_GPIO_FEM_CRX";
+GPIO26.mode            = "Output";
+GPIO26.gpioPin.$assign = "DIO_5";
+
+GPIO27.$name              = "CONFIG_GPIO_FEM_CSD";
+GPIO27.mode               = "Output";
+GPIO27.initialOutputState = "High";
+GPIO27.gpioPin.$assign    = "DIO_1";
+
+GPIO28.$name = "CONFIG_GPIO_FEM_ANT_SELECT";
+GPIO28.mode  = "Output";
 
 NVS1.$name                    = "CONFIG_NVSINTERNAL";
 NVS1.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX0";
@@ -108,16 +140,12 @@ NVS1.internalFlash.regionSize = 0x4000;
 
 SHA21.$name = "CONFIG_SHA2_0";
 
-SPI1.$name                 = "CONFIG_SPI_1";
-SPI1.mode                  = "Four Pin CS Active Low";
-SPI1.spi.sclkPin.$assign   = "DIO_20";
-SPI1.spi.pociPin.$assign   = "DIO_21";
-SPI1.spi.picoPin.$assign   = "DIO_22";
-SPI1.spi.csnPin.$assign    = "DIO_9";
-SPI1.sclkPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_SCLK";
-SPI1.pociPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_POCI";
-SPI1.picoPinInstance.$name = "CONFIG_GPIO_SPI1_VOICE_PICO";
-SPI1.csnPinInstance.$name  = "CONFIG_GPIO_SPI1_VOICE_CSN";
+SPI1.mode                = "Four Pin CS Active Low";
+SPI1.$name               = "CONFIG_SPI_VOICE_IC";
+SPI1.spi.sclkPin.$assign = "DIO_20";
+SPI1.spi.pociPin.$assign = "DIO_21";
+SPI1.spi.picoPin.$assign = "DIO_22";
+SPI1.spi.csnPin.$assign  = "DIO_9";
 
 SPI2.$name               = "CONFIG_SPI_EXT_FLASH";
 SPI2.mode                = "Four Pin CS Active Low";
@@ -150,6 +178,7 @@ Watchdog1.watchdog.$assign = "WDT0";
  * re-solve from scratch.
  */
 GPIO19.gpioPin.$suggestSolution        = "DIO_0";
+GPIO28.gpioPin.$suggestSolution        = "DIO_6";
 SPI1.spi.$suggestSolution              = "SPI2";
 SPI1.spi.dmaRxChannel.$suggestSolution = "DMA_CH19";
 SPI1.spi.dmaTxChannel.$suggestSolution = "DMA_CH20";
