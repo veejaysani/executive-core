@@ -59,7 +59,9 @@ endif()
 add_subdirectory(third_party/ti_simplelink_sdk)
 add_subdirectory(third_party/mbedtls)
 add_subdirectory(src)
-add_subdirectory(examples)
+#add_subdirectory(examples)
+add_subdirectory(app)
+
 
 set(OPENTHREAD_CONFIG_FILE "openthread-core-cc13xx_cc26xx-config.h")
 set(OPENTHREAD_PROJECT_CORE_CONFIG_FILE "openthread-core-cc13xx_cc26xx-config.h")

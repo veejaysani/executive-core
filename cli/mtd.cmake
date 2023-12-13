@@ -26,31 +26,31 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 
-add_executable(ot-ncp-ftd
+add_executable(ot-cli-mtd
     ${COMMON_SOURCES}
 )
 
-target_include_directories(ot-ncp-ftd PRIVATE ${COMMON_INCLUDES})
+target_include_directories(ot-cli-mtd PRIVATE ${COMMON_INCLUDES})
 
-if(NOT DEFINED OT_PLATFORM_LIB_FTD)
-    set(OT_PLATFORM_LIB_FTD ${OT_PLATFORM_LIB})
+if(NOT DEFINED OT_PLATFORM_LIB_MTD)
+    set(OT_PLATFORM_LIB_MTD ${OT_PLATFORM_LIB})
 endif()
 
-target_link_libraries(ot-ncp-ftd PRIVATE
-    openthread-ncp-ftd
-    ${OT_PLATFORM_LIB_FTD}
-    openthread-ftd
-    ${OT_PLATFORM_LIB_FTD}
-    openthread-ncp-ftd
+target_link_libraries(ot-cli-mtd PRIVATE
+    openthread-cli-mtd
+    ${OT_PLATFORM_LIB_MTD}
+    openthread-mtd
+    ${OT_PLATFORM_LIB_MTD}
+    openthread-cli-mtd
     ${OT_MBEDTLS}
-    ot-config-ftd
+    ot-config-mtd
     ot-config
 )
 
-install(TARGETS ot-ncp-ftd
+install(TARGETS ot-cli-mtd
     DESTINATION bin
 )
-set_target_properties(ot-ncp-ftd
+set_target_properties(ot-cli-mtd
     PROPERTIES
         SUFFIX .out
 )

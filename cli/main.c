@@ -30,20 +30,24 @@
 #include <openthread-core-config.h>
 #include <openthread/config.h>
 
+#include <openthread/cli.h>
 #include <openthread/diag.h>
-#include <openthread/ncp.h>
 #include <openthread/tasklet.h>
+#include <openthread/platform/logging.h>
 
 #include "openthread-system.h"
+#include "cli/cli_config.h"
+#include "common/code_utils.hpp"
 
 #include "lib/platform/reset_util.h"
+
 /**
- * This function initializes the NCP app.
+ * This function initializes the CLI app.
  *
  * @param[in]  aInstance  The OpenThread instance structure.
  *
  */
-extern void otAppNcpInit(otInstance *aInstance);
+extern void otAppCliInit(otInstance *aInstance);
 
 #if OPENTHREAD_CONFIG_HEAP_EXTERNAL_ENABLE
 OT_TOOL_WEAK void *otPlatCAlloc(size_t aNum, size_t aSize)
@@ -57,12 +61,38 @@ OT_TOOL_WEAK void otPlatFree(void *aPtr)
 }
 #endif
 
-#if 0
 void otTaskletsSignalPending(otInstance *aInstance)
 {
     OT_UNUSED_VARIABLE(aInstance);
 }
+
+#if OPENTHREAD_POSIX && !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
+static otError ProcessExit(void *aContext, uint8_t aArgsLength, char *aArgs[])
+{
+    OT_UNUSED_VARIABLE(aContext);
+    OT_UNUSED_VARIABLE(aArgsLength);
+    OT_UNUSED_VARIABLE(aArgs);
+
+    exit(EXIT_SUCCESS);
+}
+
+#if OPENTHREAD_EXAMPLES_SIMULATION
+extern otError ProcessNodeIdFilter(void *aContext, uint8_t aArgsLength, char *aArgs[]);
 #endif
+
+static const otCliCommand kCommands[] = {
+    {"exit", ProcessExit},
+#if OPENTHREAD_EXAMPLES_SIMULATION
+    /*
+     * The CLI command `nodeidfilter` only works for simulation in real time.
+     * The usage of the command `nodeidfilter`:
+     *     - `nodeidfilter deny <nodeid>`:  It denies the connection to a specified node.
+     *     - `nodeidfilter clear`:          It restores the filter state to default.
+     */
+    {"nodeidfilter", ProcessNodeIdFilter},
+#endif
+};
+#endif // OPENTHREAD_POSIX && !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
 
 int app_main(int argc, char *argv[])
 {
@@ -94,7 +124,11 @@ pseudo_reset:
 #endif
     assert(instance);
 
-    otAppNcpInit(instance);
+    otAppCliInit(instance);
+
+#if OPENTHREAD_POSIX && !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
+    otCliSetUserCommands(kCommands, OT_ARRAY_LENGTH(kCommands), instance);
+#endif
 
     while (!otSysPseudoResetWasRequested())
     {
@@ -111,3 +145,14 @@ pseudo_reset:
 
     return 0;
 }
+
+#if OPENTHREAD_CONFIG_LOG_OUTPUT == OPENTHREAD_CONFIG_LOG_OUTPUT_APP
+void otPlatLog(otLogLevel aLogLevel, otLogRegion aLogRegion, const char *aFormat, ...)
+{
+    va_list ap;
+
+    va_start(ap, aFormat);
+    otCliPlatLogv(aLogLevel, aLogRegion, aFormat, ap);
+    va_end(ap);
+}
+#endif

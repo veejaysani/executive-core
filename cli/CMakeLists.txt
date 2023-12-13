@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2020, The OpenThread Authors.
+#  Copyright (c) 2019, The OpenThread Authors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -26,31 +26,36 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 
-add_executable(ot-ncp-mtd
-    ${COMMON_SOURCES}
+set(COMMON_INCLUDES
+    ${OT_PUBLIC_INCLUDES}
+    ${TI_PUBLIC_INCLUDES}
+    ${PROJECT_SOURCE_DIR}/openthread/examples/platforms
+    ${PROJECT_SOURCE_DIR}/openthread/src/core
 )
 
-target_include_directories(ot-ncp-mtd PRIVATE ${COMMON_INCLUDES})
+set(COMMON_SOURCES
+    cli_uart.cpp
+    main.c
+)
 
-if(NOT DEFINED OT_PLATFORM_LIB_MTD)
-    set(OT_PLATFORM_LIB_MTD ${OT_PLATFORM_LIB})
+if(TI_SIMPLELINK_KERNEL STREQUAL "freertos")
+    list(APPEND COMMON_SOURCES freertos_main.c)
+
+elseif(TI_SIMPLELINK_KERNEL STREQUAL "tirtos7")
+    list(APPEND COMMON_SOURCES tirtos_main.c)
+
+else()
+    message(FATAL_ERROR "Unsuported TI_SIMPLELINK_KERNEL: ${TI_SIMPLELINK_KERNEL}")
 endif()
 
-target_link_libraries(ot-ncp-mtd PRIVATE
-    openthread-ncp-mtd
-    ${OT_PLATFORM_LIB_MTD}
-    openthread-mtd
-    ${OT_PLATFORM_LIB_MTD}
-    openthread-ncp-mtd
-    ${OT_MBEDTLS}
-    ot-config-mtd
-    ot-config
-)
+#if(OT_FTD)
+#    include(ftd.cmake)
+#endif()
 
-install(TARGETS ot-ncp-mtd
-    DESTINATION bin
-)
-set_target_properties(ot-ncp-mtd
-    PROPERTIES
-        SUFFIX .out
-)
+if(OT_MTD)
+    include(mtd.cmake)
+endif()
+
+#if(OT_RCP)
+#    include(radio.cmake)
+#endif()

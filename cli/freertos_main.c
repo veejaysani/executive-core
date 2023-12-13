@@ -32,6 +32,8 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include <ti_drivers_config.h>
+
 /* Driver Header files */
 #include <ti/drivers/Board.h>
 #include <ti/drivers/GPIO.h>
@@ -50,7 +52,10 @@ extern int app_main(int argc, char *argv[]);
 StackType_t  appStack[APP_STACK_SIZE];
 StaticTask_t appTaskBuffer;
 
-void vApplicationStackOverflowHook(void)
+TaskHandle_t blinkerHandle; 
+void blinker(void *args);
+
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char * pcTaskName)
 {
     while (1)
     {
@@ -80,6 +85,10 @@ int main(void)
 
     SHA2_init();
 
+    GPIO_setMux(CONFIG_GPIO_FEM_CRX, IOC_PORT_RFC_GPO0);
+    GPIO_setMux(CONFIG_GPIO_FEM_CTX, IOC_PORT_RFC_GPO1);
+    GPIO_setMux(CONFIG_GPIO_FEM_CHL, IOC_PORT_RFC_GPO1);
+    
     if (NULL ==
         xTaskCreateStatic(vTaskCode, "APP", APP_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, appStack, &appTaskBuffer))
     {
@@ -87,9 +96,24 @@ int main(void)
             ;
     }
 
+    xTaskCreate(blinker, "BLINK", APP_STACK_SIZE, NULL, tskIDLE_PRIORITY, &blinkerHandle);
+
     vTaskStartScheduler();
 
     // Should never get here.
     while (1)
         ;
+}
+
+
+void blinker(void *args)
+{
+    (void) args;
+    int on = 1; 
+
+    while ( true ) 
+    {
+        GPIO_write(CONFIG_GPIO_GREEN_LED, on = (on ? 0 : 1));
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
 }

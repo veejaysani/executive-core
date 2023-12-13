@@ -46,7 +46,6 @@
 #include <ti/drivers/SHA2.h>
 
 /* POSIX Header files */
-#include <mqueue.h>
 #include <pthread.h>
 #include <sched.h>
 

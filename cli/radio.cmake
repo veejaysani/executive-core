@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2020, The OpenThread Authors.
+#  Copyright (c) 2021, The OpenThread Authors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,35 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 
-add_executable(ot-rcp
+add_executable(ot-cli-radio
     ${COMMON_SOURCES}
 )
 
-target_include_directories(ot-rcp PRIVATE ${COMMON_INCLUDES})
+target_include_directories(ot-cli-radio PRIVATE ${COMMON_INCLUDES})
 
 if(NOT DEFINED OT_PLATFORM_LIB_RCP)
     set(OT_PLATFORM_LIB_RCP ${OT_PLATFORM_LIB})
 endif()
 
-target_link_libraries(ot-rcp PRIVATE
-    openthread-rcp
+if(NOT DEFINED OT_MBEDTLS_RCP)
+    set(OT_MBEDTLS_RCP ${OT_MBEDTLS})
+endif()
+
+target_link_libraries(ot-cli-radio PRIVATE
+    openthread-cli-radio
     ${OT_PLATFORM_LIB_RCP}
-    openthread-radio
+    openthread-radio-cli
     ${OT_PLATFORM_LIB_RCP}
-    openthread-rcp
+    openthread-cli-radio
+    ${OT_MBEDTLS_RCP}
     ot-config-radio
     ot-config
 )
 
-install(TARGETS ot-rcp
+install(TARGETS ot-cli-radio
     DESTINATION bin
 )
-set_target_properties(ot-rcp
+set_target_properties(ot-cli-radio
     PROPERTIES
         SUFFIX .out
 )
