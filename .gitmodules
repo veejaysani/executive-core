@@ -4,6 +4,7 @@
 [submodule "third_party/freertos/repo"]
 	path = third_party/freertos/repo
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+	branch = abb5452a12ebff8e8af640e3ceb5fe16f30e6f54
 [submodule "third_party/ti_simplelink_sdk/repo_cc13xx_cc26xx"]
 	path = third_party/ti_simplelink_sdk/repo_cc13xx_cc26xx
 	url = https://github.com/TexasInstruments/cc13xx_cc26xx_sdk.git

@@ -111,7 +111,8 @@
     }
 
 /* Constants related to the behaviour or the scheduler. */
-#define configTICK_RATE_HZ ((TickType_t)100000)
+/* instructed by Texas Instruments to change rate for low-power mode */
+#define configTICK_RATE_HZ ((TickType_t)10000)
 #define configUSE_PREEMPTION 1
 #define configUSE_TIME_SLICING 0
 #define configMAX_PRIORITIES (10UL)

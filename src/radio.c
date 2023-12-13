@@ -354,7 +354,16 @@ static void rfCoreInitReceiveParams(void)
     sReceiveCmd.rxConfig.bAppendTimestamp = 1;
 
     sReceiveCmd.frameFiltOpt.frameFiltEn      = 1;
-    sReceiveCmd.frameFiltOpt.frameFiltStop    = 1;
+
+    // CIT-207: (from TI)
+    // that frameFiltStop = 1 causes frame reception to stop once 
+    // frame filtering has caused the frame to be rejected.  Whereas 
+    // frameFiltStop = 0 receives all packets to the end. To that end, 
+    // R&D has proposed the following change while the issue is still 
+    // undergoing investigation with collaboration from the Radio 
+    // Development Team.
+    sReceiveCmd.frameFiltOpt.frameFiltStop    = 0;
+
     sReceiveCmd.frameFiltOpt.autoAckEn        = 0;
     sReceiveCmd.frameFiltOpt.bStrictLenFilter = 0;
 #if defined(TIOP_RADIO_USE_CSF)
@@ -1498,9 +1507,11 @@ static otError rfCoreGenerateEnhAck(otRadioFrame *aRxFrame, otRadioFrame *aAckFr
         }
     }
 #endif
+// Resideo [JJM]: see declaraton in mac_frame.cpp 
+#if OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2
     otEXPECT_ACTION(OT_ERROR_NONE == otMacFrameGenerateEnhAck(aRxFrame, aRxFrame->mInfo.mRxInfo.mAckedWithFramePending, ackIeData, ackIeDataLength,
                              aAckFrame), ret = OT_ERROR_PARSE);
-
+#endif 
 exit:
     return ret;
 }
