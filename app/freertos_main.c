@@ -69,6 +69,19 @@ void vTaskCode(void *pvParameters)
     app_main(0, NULL);
 }
 
+void FEM_init()
+{
+    GPIO_setConfig(CONFIG_GPIO_FEM_CHL, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_HIGH);
+    GPIO_setConfig(CONFIG_GPIO_FEM_CPS, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+    GPIO_setConfig(CONFIG_GPIO_FEM_CRX, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+    GPIO_setConfig(CONFIG_GPIO_FEM_CSD, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_HIGH);
+    GPIO_setConfig(CONFIG_GPIO_FEM_CTX, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
+
+    GPIO_setMux(CONFIG_GPIO_FEM_CRX, IOC_PORT_RFC_GPO0);    // LNA
+    GPIO_setMux(CONFIG_GPIO_FEM_CTX, IOC_PORT_RFC_GPO1);    // PA
+    GPIO_setMux(CONFIG_GPIO_FEM_CHL, IOC_PORT_RFC_GPO1);
+}
+
 int main(void)
 {
     Board_init();

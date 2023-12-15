@@ -5,20 +5,23 @@
 
 ---
 
-# OpenThread CC13XX_CC26XX Example
+# Executive Core Firmware 
 
-This directory contains the platform drivers necssary to run OpenThread on the Texas Instruments CC13XX_CC26XX family of
-Connected MCUs. These drivers use the TI SimpleLink™ SDK for the RTOS enabled platform drivers. The example applications
-build with FreeRTOS to enable an environment for the standard device drivers to operate.
+This repos contains the platform drivers and application necessary to run the executive-core firmware
+on a CC2674R10. This software is based on the ot-ti (OpenThread-TexasInstruments) repository. 
 
 ## Toolchain
 
+```bash
+$ git clone <path-to-repostitory>
+```
 In a Bash terminal, follow these instructions to install the GNU toolchain and other dependencies.
 
 ```bash
-$ cd <path-to-ot-ti>
+$ cd <path-to-executive-core>
 $ git submodule update --init
 $ ./script/bootstrap
+$ ./script/patch_all_submodules 
 ```
 
 ## Building
@@ -27,14 +30,13 @@ In a Bash terminal, follow these instructions to build the cc13xx_cc26xx example
 reference development kit available on ti.com.
 
 ```bash
-$ cd <path-to-ot-ti>
+$ cd <path-to-executive-core>
 $ ./script/build LP_EM_CC1354P10_1
 ```
 
 ## Flash Binaries
 
-If the build completed successfully, the `elf` files may be found in `<path-to-ot-ti>/build/bin/`. These files do not
-have any file extension.
+If the build completed successfully, the `.out` file may be found in `<path-to-executive-core>/build/bin/`. 
 
 Loading the built image onto a LaunchPad is supported through two methods; Uniflash and Code Composer Studio (CCS).
 UniFlash can be used to load the image. Code Composer Studio can be used to load the image and debug the source code.

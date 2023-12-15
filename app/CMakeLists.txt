@@ -48,9 +48,9 @@ else()
     message(FATAL_ERROR "Unsuported TI_SIMPLELINK_KERNEL: ${TI_SIMPLELINK_KERNEL}")
 endif()
 
-#if(OT_FTD)
-#    include(ftd.cmake)
-#endif()
+if(OT_FTD)
+    include(ftd.cmake)
+endif()
 
 if(OT_MTD)
     include(mtd.cmake)
